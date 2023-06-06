@@ -1,8 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 
 def create_app(config=None):
@@ -19,10 +21,7 @@ def create_app(config=None):
         from app.models import User, Breakage, Student, Apparatus, Record, Bank
         db.create_all()
 
-    # with app.app_context():
-    #     user = User(username="admin", password="admin")
-    #     db.session.add(user)
-    #     db.session.commit()
+    migrate.init_app(app, db)
 
     from app.models import User
 
